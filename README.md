@@ -20,9 +20,11 @@ I'd also love to hear about any unintended solutions or functionality you might 
 ## Potential issues
 <details>
     <summary>Contains vulnerability/exploit spoilers</summary>
-    The prototype pollution vulnerability requires the global object prototype itself to be polluted (e.g., <code>{}.__proto</code>).
+    The prototype pollution vulnerability requires the global object prototype itself to be polluted (e.g., <code>{}.__proto__</code>).
     This means that if one participant were to pollute the object, it would affect all other players using the same server.
     <br><br>
     Currently, this is solved by clearing the prototype pollution as soon as the vulnerable code snippet runs so that other players are not affected.
-    This seems to work fine for now as a more robust solution would require separate instances for each player.
+    This functionality does not exist in the packaged source code that is distributed to players as it would too clearly indicate the solution.
+    <br><br>
+    For now this seems to work, but it's something I'll keep an eye on. A more robust solution would require separate instances for each player which should be avoided if possible.
 </details>

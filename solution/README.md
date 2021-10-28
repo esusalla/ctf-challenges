@@ -8,7 +8,7 @@ When used in conjunction, these vulnerabilies allow you to construct a payload t
 The purpose of the blacklist filter (`sanitized.replace(/C/g, '\u0421').replace(/c/g, '\u0441')`) is to make it so that if players want to access the `document.cookie` value, they have to take advantage of the fact that the XSS filter does not re-escape attribute values it previously un-escaped.
 
 As an example, the payload `<svg onload="alert(document.cookie)">` 
-would easily be caught by the blacklist filter because it contains multiple `c`s. HTML encoding the JavaScript portion once would give you
+would easily be caught by the blacklist filter because it contains multiple instances of `c`. HTML encoding the JavaScript portion once would give you
 ```html
 <svg onload=&#97;&#108;&#101;&#114;&#116;&#40;&#100;&#111;&#99;&#117;&#109;&#101;&#110;&#116;&#46;&#99;&#111;&#111;&#107;&#105;&#101;&#41;>
 ```
