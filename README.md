@@ -2,7 +2,7 @@
 Challenge description: `My favorite hero has an awesome portfolio page. It even lets you immediately contact him in case of emergencies.`
 <details>
     <summary>Contains vulnerability/exploit spoilers</summary>
-    This challenge revolves around chaining together prototype pollution and cross-site scripting in order to steal a cookie (the flag). There is also some specific encoding required to bypass an attempt at filtering out malicious payloads.
+    This challenge revolves around chaining together prototype pollution and cross-site scripting in order to steal a cookie (the flag). There is also some specific encoding required to bypass a blacklist filter.
     There are two up-to-date yet still vulnerable npm packages used by the app that make all of this possible (specifically <code>merge-objects</code> and <code>xss</code>).
     <br><br>
     All of the required vulnerabilites are publicly documented whether thats in an npm warning, a GitHub issue, or a list of known exploits.
@@ -20,7 +20,7 @@ I'd also love to hear about any unintended solutions or functionality you might 
 ## Potential issues
 <details>
     <summary>Contains vulnerability/exploit spoilers</summary>
-    The prototype pollution vulnerability requires the global object prototype itself to be polluted (e.g., `{}.__proto`).
+    The prototype pollution vulnerability requires the global object prototype itself to be polluted (e.g., <code>{}.__proto</code>).
     This means that if one participant were to pollute the object, it would affect all other players using the same server.
     <br><br>
     Currently, this is solved by clearing the prototype pollution as soon as the vulnerable code snippet runs so that other players are not affected.
