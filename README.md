@@ -20,8 +20,8 @@ I'd also love to hear about any unintended solutions or functionality you might 
 <details>
     <summary>Contains vulnerability/exploit spoilers</summary>
     Please note that due to the persistent nature of the global object prototype (as noted in the potential issues section below), attempting to pollute the same property more than once will cause an array length error in the Docker container.
-    This can be circumvented locally by either adding the same reset mechanism used in the `challenge/index.js` file, restarting the container, or wrapping the merge function in a try-catch block as you work on the next stage of the exploit.
     <br><br>
+    This can be circumvented locally by either adding the same reset mechanism used in the <code>challenge/index.js</code> file, restarting the container, or wrapping the merge function in a try-catch block as you work on the next stage of the exploit.
 </details>
 
 ## Potential issues
